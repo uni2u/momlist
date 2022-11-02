@@ -1,6 +1,17 @@
-
+## iptable 단점
 - iptables을 기반으로 IP와 Port기반의 전통적인 포워딩 기술은 벌써 20년이라는 세월동안 널리 사용되어 왔다.
-- 특히 퍼블릭/프라이빗 클라우드 제품군들 모두 iptables기반의 Security Group등을 기본으로 제공하고 있고 Kubernetes 마저도 CNI 핵심으로 iptables을 활용하고 있다.
+- 특히 퍼블릭/프라이빗 클라우드 제품군들 모두 iptables기반의 Security Group등을 기본으로 제공하고 있고 Kubernetes 마저도 CNI 핵심으로 iptables을 활용하고 있음
+### 성능 문제
+- iptables의 수가 많아지는 만큼 Delay 발생
+  - iptables는 Packet이 iptables의 규칙에 일치할 때까지 모든 규칙을 평가 하게 되는데 이러한 규칙이 많아 질수록 전달되는 시간과 처리 시간이 그만큼 지연
+### time
+- "Incremental Update"를 지원하지 않음
+  - 새로운 Service가 생성 되면서 추가되는 규칙을 적용하기 위해서 전체 iptables list를 교체
+  - Service를 생성하면 기본적으로 생성되는 규칙이 Service의 수만큼 늘어나기 때문에 많은 Service를 제공하는 환경에서는 적합하지 않음
+### Operation
+- 안정적인 Service를 제공하기 위해서는 실제 구성된 환경을 잘 이해
+  - Service가 증가하면서 기하급수적으로 늘어나는 iptables의 규칙을 모두 이해하기는 거의 불가능
+
 
 - 동적으로 변화하고 매우 복잡한 마이크로서비스를 사용하는 시대에 전통적인 방식의 IP, Port관리는 비효율적인 측면이 없지 않다.
 - BPF을 활용하여 리눅스 커널내에서 데이터 포워딩을 할 수 있고
