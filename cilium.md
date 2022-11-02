@@ -1,5 +1,4 @@
 ## iptable 단점
-- iptables을 기반으로 IP와 Port기반의 전통적인 포워딩 기술은 벌써 20년이라는 세월동안 널리 사용되어 왔다.
 - 특히 퍼블릭/프라이빗 클라우드 제품군들 모두 iptables기반의 Security Group등을 기본으로 제공하고 있고 Kubernetes 마저도 CNI 핵심으로 iptables을 활용하고 있음
 - 동적으로 변화하고 매우 복잡한 마이크로서비스를 사용하는 시대에 전통적인 방식의 IP, Port관리는 비효율적
 ### 성능 문제
@@ -18,10 +17,9 @@
 
 ## eBPF
 - BPF을 활용하여 리눅스 커널내에서 데이터 포워딩을 할 수 있고
-  - Kubernetes Service기반 Load Balancing이나 istio와 같은 Service Mesh를 위한 Proxy Injection 을 통해 여러 활용을 할 수 있다. 
+  - BPF는 iptable 처럼 전체 규칙 집합을 반복하는 것이 아니라 규칙과 일치하므로 네트워크 정책 구현에 완벽하게 적합
 - 고효율 BPF Datapath
   - 모든 데이터 경로가 클러스터 전체에 완전 분산
-  - Envoy같은 proxy injection 제공, 추후 sidecar proxy 형태 제공예정
 - CNI, CMM plugins
   - Kubernetes, Mesos, Docker에 쉽게 통합가능
 - Packet, API 네트워크 보안
